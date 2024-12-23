@@ -6,6 +6,6 @@
 
 添加了对USB共享网络的支持，kmod-usb-net-rndis
 
-添加了对USB外部存储的支持，kmod-usb-storage-uas kmod-fs-ext4 e2fsprogs usbutils
+添加了对USB外部存储的支持，kmod-usb-storage-uas kmod-fs-ext4 usbutils
 
 添加了smaba4
