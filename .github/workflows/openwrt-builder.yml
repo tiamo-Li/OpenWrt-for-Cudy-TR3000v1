@@ -57,10 +57,6 @@ jobs:
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         cd openwrt/package
         git clone https://github.com/jerrykuku/luci-theme-argon.git
-        mkdir -p ./luci-app-diskman && \
-        wget https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/applications/luci-app-diskman/Makefile -O ./luci-app-diskman/Makefile
-        mkdir -p ./parted && \
-        wget https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/Parted.Makefile -O ./parted/Makefile
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
 
     - name: Load custom feeds
