@@ -57,6 +57,7 @@ jobs:
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         cd openwrt/package
         git clone https://github.com/jerrykuku/luci-theme-argon.git
+        git clone https://github.com/jerrykuku/luci-app-argon-config.git
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
 
     - name: Load custom feeds
