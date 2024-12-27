@@ -15,5 +15,4 @@
 
 # Add a feed source
 echo 'src-git OpenClash https://github.com/vernesong/OpenClash' >>feeds.conf.default
-#echo 'src-git helloworld https://github.com/fw876/helloworld' >>feeds.conf.default
-#echo 'src-git passwall https://github.com/xiaorouji/openwrt-passwall' >>feeds.conf.default
+echo "src-git istore https://github.com/linkease/istore" >> ./feeds.conf.default
