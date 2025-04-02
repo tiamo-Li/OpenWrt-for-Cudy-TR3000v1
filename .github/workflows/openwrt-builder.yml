@@ -21,7 +21,6 @@ env:
   REPO_BRANCH: v24.10.0
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: .config
-  SETUP_FILE: setup.sh
   DIY_P1_SH: diy-part1.sh
   DIY_P2_SH: diy-part2.sh
   UPLOAD_BIN_DIR: false
@@ -78,6 +77,7 @@ jobs:
     - name: Install feeds
       run: |
         cd openwrt && ./scripts/feeds install -a
+        git clone https://github.com/DustReliant/luci-app-filetransfer ./package/luci-app-filetransfer
         git clone https://github.com/kenzok8/small-package.git
         mv small-package/luci-app-npc package/
         mv small-package/nps package/
@@ -86,8 +86,6 @@ jobs:
     - name: Load custom configuration
       run: |
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
-        mkdir -p openwrt/files/etc
-        [ -e SETUP_FILE ] && mv SETUP_FILE openwrt/files/etc/setup.sh
         chmod +x $DIY_P2_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
