@@ -74,9 +74,9 @@ jobs:
 
     - name: Load custom configuration
       run: |
-        mkdir -p openwrt/files
-        [ -e SETUP_FILE ] && mv SETUP_FILE openwrt/files/setup.sh
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
+        mkdir -p openwrt/files/etc
+        [ -e SETUP_FILE ] && mv SETUP_FILE openwrt/files/etc/setup.sh
         chmod +x $DIY_P2_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
