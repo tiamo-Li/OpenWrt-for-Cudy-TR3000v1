@@ -68,14 +68,20 @@ jobs:
 
     - name: Update feeds
       run: |
-        cd openwrt && ./scripts/feeds update -a && rm -rf feeds/luci/applications/luci-app-mosdns
+        cd openwrt && ./scripts/feeds update -a 
+        rm -rf feeds/luci/applications/luci-app-mosdns
         rm -rf feeds/packages/net/{alist,adguardhome,mosdns,xray*,v2ray*,v2ray*,sing*,smartdns}
         rm -rf feeds/packages/utils/v2dat
         rm -rf feeds/packages/lang/golang
         git clone https://github.com/kenzok8/golang feeds/packages/lang/golang
       
     - name: Install feeds
-      run: cd openwrt && ./scripts/feeds install -a
+      run: |
+        cd openwrt && ./scripts/feeds install -a
+        git clone https://github.com/kenzok8/small-package.git
+        mv small-package/luci-app-npc package/
+        mv small-package/nps package/
+        rm -rf small-package/
 
     - name: Load custom configuration
       run: |
