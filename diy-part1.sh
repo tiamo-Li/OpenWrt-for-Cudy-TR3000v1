@@ -15,4 +15,4 @@
 
 # Add a feed source
 echo '1i src-git kenzo https://github.com/kenzok8/openwrt-packages' >>feeds.conf.default
-echo '1i src-git kenzo https://github.com/kenzok8/small' >>feeds.conf.default
+echo '2i src-git kenzo https://github.com/kenzok8/small' >>feeds.conf.default
