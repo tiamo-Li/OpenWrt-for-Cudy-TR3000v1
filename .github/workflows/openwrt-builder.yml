@@ -74,7 +74,6 @@ jobs:
     - name: Install feeds
       run: |
         cd openwrt && ./scripts/feeds install -a
-        git clone https://github.com/f8q8/luci-app-filetransfer.git package/luci-app-filetransfer
         git clone https://github.com/kenzok8/small-package.git
         mv small-package/luci-app-npc package/
         mv small-package/nps package/
