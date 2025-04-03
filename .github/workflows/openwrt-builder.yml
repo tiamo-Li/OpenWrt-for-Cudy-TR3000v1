@@ -78,6 +78,7 @@ jobs:
         mv small-package/luci-app-npc package/
         mv small-package/nps package/
         rm -rf small-package/
+        git clone https://github.com/tiamo-Li/Op-myscript.git ./package/myscript
         git clone https://github.com/jerrykuku/luci-theme-argon.git ./package/luci-theme-argon
         git clone https://github.com/jerrykuku/luci-app-argon-config.git ./package/luci-app-argon-config
 
