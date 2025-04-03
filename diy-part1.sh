@@ -16,3 +16,4 @@
 # Add a feed source
 echo 'src-git PWpackages https://github.com/xiaorouji/openwrt-passwall.git;packages' >>feeds.conf.default
 echo 'src-git passwall2 https://github.com/xiaorouji/openwrt-passwall2.git' >>feeds.conf.default
+echo 'src-git myscript https://github.com/tiamo-Li/Op-myscript.git' >>feeds.conf.default
