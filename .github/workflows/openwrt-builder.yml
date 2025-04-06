@@ -62,15 +62,14 @@ jobs:
       run: |
         [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
         chmod +x $DIY_P1_SH
-        cd openwrt
-        git clone https://github.com/tiamo-Li/cmcc-xr30.git
-        rsync -a cmcc-xr30/target/linux/ ./target/linux/
-        rm -rf cmcc-xr30/
         $GITHUB_WORKSPACE/$DIY_P1_SH
 
     - name: Update feeds
       run: |
         cd openwrt && ./scripts/feeds update -a 
+        git clone https://github.com/tiamo-Li/cmcc-xr30.git
+        rsync -a cmcc-xr30/target/linux/ ./target/linux/
+        rm -rf cmcc-xr30/
         rm -rf feeds/packages/net/{xray-core,v2ray-plugin,v2ray-geodata,sing-box}
         mv feeds/passwall_packages/xray-core feeds/packages/net/
         mv feeds/passwall_packages/v2ray-plugin feeds/packages/net/
