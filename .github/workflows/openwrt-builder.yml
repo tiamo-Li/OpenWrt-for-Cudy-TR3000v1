@@ -63,6 +63,9 @@ jobs:
         [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
         chmod +x $DIY_P1_SH
         cd openwrt
+        git clone https://github.com/tiamo-Li/cmcc-xr30.git
+        rsync -a cmcc-xr30/target/linux/ ./target/linux/
+        rm -rf cmcc-xr30/
         $GITHUB_WORKSPACE/$DIY_P1_SH
 
     - name: Update feeds
@@ -79,9 +82,6 @@ jobs:
     - name: Install feeds
       run: |
         cd openwrt && ./scripts/feeds install -a
-        git clone https://github.com/tiamo-Li/cmcc-xr30.git
-        rsync -a cmcc-xr30/target/linux/ ./target/linux/
-        rm -rf cmcc-xr30/
         git clone https://github.com/kenzok8/small-package.git
         mv small-package/luci-app-npc package/
         mv small-package/nps package/
