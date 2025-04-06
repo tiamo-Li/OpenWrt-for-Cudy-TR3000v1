@@ -79,6 +79,9 @@ jobs:
     - name: Install feeds
       run: |
         cd openwrt && ./scripts/feeds install -a
+        git clone https://github.com/tiamo-Li/cmcc-xr30.git
+        rsync -a cmcc-xr30/target/linux/ ./target/linux/
+        rm -rf cmcc-xr30/
         git clone https://github.com/kenzok8/small-package.git
         mv small-package/luci-app-npc package/
         mv small-package/nps package/
