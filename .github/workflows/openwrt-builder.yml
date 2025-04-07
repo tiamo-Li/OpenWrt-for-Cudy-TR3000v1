@@ -69,9 +69,9 @@ jobs:
       run: |
         cd openwrt && ./scripts/feeds update -a 
         git clone https://github.com/tiamo-Li/cmcc-xr30.git
-        mv cmcc-xr30/target/linux/mediatek/dts/mt7981b-cmcc-xr30.dts ./target/linux/mediatek/dts/
-        mv cmcc-xr30/target/linux/mediatek/dts/mt7981b-cmcc-xr30.dtsi ./target/linux/mediatek/dts/
-        mv cmcc-xr30/target/linux/mediatek/filogic/base-files/etc/board.d/02_network ./target/linux/mediatek/filogic/base-files/etc/board.d/
+        mv cmcc-xr30/target/linux/mediatek/dts/mt7981b-cmcc-xr30.dts ./target/linux/mediatek/dts/mt7981b-cmcc-xr30.dts
+        mv cmcc-xr30/target/linux/mediatek/dts/mt7981b-cmcc-xr30.dtsi ./target/linux/mediatek/dts/mt7981b-cmcc-xr30.dtsi
+        mv cmcc-xr30/target/linux/mediatek/filogic/base-files/etc/board.d/02_network ./target/linux/mediatek/filogic/base-files/etc/board.d/02_network
         mv cmcc-xr30/target/linux/mediatek/image/filogic.mk ./target/linux/mediatek/image/filogic.mk
         rm -rf cmcc-xr30/
         rm -rf feeds/packages/net/{xray-core,v2ray-plugin,v2ray-geodata,sing-box}
