@@ -7,7 +7,7 @@
 #sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
 
 # Modify hostname and time zones
-sed -i 's/OpenWrt/WH3000/g' package/base-files/files/bin/config_generate
+sed -i 's/OpenWrt/YS/g' package/base-files/files/bin/config_generate
 sed -i 's/UTC/Asia\/Shanghai/g' package/base-files/files/bin/config_generate
 
 # add Argon theme
