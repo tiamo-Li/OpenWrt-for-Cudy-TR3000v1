@@ -4,10 +4,15 @@
 # 获取参数
 SSID_START=$1
 SSID_END=$2
-NEW_PASSWORD="$3"  # 新密码
-SSID_PREFIX=${4:-"5G"}  # 默认前缀为"5G"
-PASSWORD=${5:-"12345678"}  # 默认密码为"12345678"
+SSID_PREFIX=${3:-"5G"}  # 默认前缀为"5G"
+PASSWORD=${4:-"12345678"}  # 默认密码为"12345678"
+NEW_PASSWORD="$5"  # 新后台密码
 BASE_IP=${6:-191}  # 默认IP后缀为191
+
+# 修改密码
+if [ -n "$NEW_PASSWORD" ]; then
+    echo -e "$NEW_PASSWORD\n$NEW_PASSWORD" | passwd root >/dev/null 2>&1
+fi
 
 # 常量定义
 RADIO="radio1"
@@ -24,9 +29,6 @@ APPNAME="passwall2"
     echo "错误：无线设备$RADIO不存在" >&2
     exit 1
 }
-
-# 修改密码
-echo -e "$NEW_PASSWORD\n$NEW_PASSWORD" | passwd root >/dev/null 2>&1
 
 # 设置国家代码、删除默认wifi
 uci set wireless.$RADIO.country='US'
