@@ -133,22 +133,9 @@ for i in $(seq $SSID_START $SSID_END); do
     # 防火墙配置
     uci add_list firewall.@zone[0].network="$interface_num"
 
-    uci add passwall2 acl_rule
-    uci set passwall2.@acl_rule[-1].enabled='1'
-    uci set passwall2.@acl_rule[-1].remarks="$interface_num"
-    uci set passwall2.@acl_rule[-1].interface="$interface_num"
-    uci set passwall2.@acl_rule[-1].sources="192.168.$((BASE_IP+i-1)).0/24"
-    uci set passwall2.@acl_rule[-1].direct_dns_query_strategy='UseIP'
-    uci set passwall2.@acl_rule[-1].remote_dns_protocol='tcp'
-    uci set passwall2.@acl_rule[-1].remote_dns='8.8.8.8'
-    uci set passwall2.@acl_rule[-1].remote_dns_detour='remote'
-    uci set passwall2.@acl_rule[-1].remote_fakedns='0'
-    uci set passwall2.@acl_rule[-1].remote_dns_query_strategy='UseIPv4'
-
     uci commit wireless
     uci commit network
     uci commit dhcp
-    uci commit "$APPNAME"
 done
 
 uci commit firewall
