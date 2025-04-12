@@ -30,56 +30,53 @@ APPNAME="passwall2"
     exit 1
 }
 
-# 设置国家代码、删除默认wifi
-uci set wireless.$RADIO.country='US'
-uci del wireless.default_radio0
-uci del wireless.default_radio1
+if [ "$SSID_START" -eq 1 ]; then
+    # 设置国家代码、删除默认wifi
+    uci set wireless.$RADIO.country='US'
+    uci del wireless.default_radio0
+    uci del wireless.default_radio1
 
-# 设置无线参数
-uci set wireless.radio1.cell_density='2'
-uci set wireless.radio1.channel='36'
-uci set wireless.radio1.htmode='HE40'
+    # 设置无线参数
+    uci set wireless.radio1.cell_density='2'
+    uci set wireless.radio1.channel='36'
+    uci set wireless.radio1.htmode='HE40'
 
-# 防火墙配置
-uci del firewall.@defaults[0].syn_flood
-uci set firewall.@defaults[0].synflood_protect='1'
-uci set firewall.@defaults[0].input='ACCEPT'
-uci set firewall.@defaults[0].flow_offloading='1'
-uci set firewall.@defaults[0].flow_offloading_hw='1'
-uci set firewall.@zone[0].forward='REJECT'
+    # 防火墙配置
+    uci del firewall.@defaults[0].syn_flood
+    uci set firewall.@defaults[0].synflood_protect='1'
+    uci set firewall.@defaults[0].input='ACCEPT'
+    uci set firewall.@defaults[0].flow_offloading='1'
+    uci set firewall.@defaults[0].flow_offloading_hw='1'
+    uci set firewall.@zone[0].forward='REJECT'
 
-#关闭wan6、配置lan接口
-uci del network.wan6
-uci del firewall.@zone[-1].network
-uci add_list firewall.@zone[-1].network='wan'
-uci del network.lan.ip6assign
-uci del dhcp.lan.dhcpv6
-uci del dhcp.lan.ra_flags
-uci del dhcp.lan.ra_slaac
-uci del dhcp.lan.ra
-uci set dhcp.lan.force='1'
+    # 关闭wan6、配置lan接口
+    uci del network.wan6
+    uci del firewall.@zone[-1].network
+    uci add_list firewall.@zone[-1].network='wan'
+    uci del network.lan.ip6assign
+    uci del dhcp.lan.dhcpv6
+    uci del dhcp.lan.ra_flags
+    uci del dhcp.lan.ra_slaac
+    uci del dhcp.lan.ra
+    uci set dhcp.lan.force='1'
 
-# 关闭网桥和两个接口设备的ipv6
-uci set network.@device[-1].ipv6='0'
-uci add network device
-uci set network.@device[-1].name='eth0'
-uci set network.@device[-1].ipv6='0'
-uci commit network
-uci add network device
-uci set network.@device[-1].name='eth1'
-uci set network.@device[-1].ipv6='0'
-uci commit network
+    # 关闭网桥和两个接口设备的ipv6
+    uci set network.@device[-1].ipv6='0'
+    uci add network device
+    uci set network.@device[-1].name='eth0'
+    uci set network.@device[-1].ipv6='0'
+    uci commit network
+    uci add network device
+    uci set network.@device[-1].name='eth1'
+    uci set network.@device[-1].ipv6='0'
+    uci commit network
 
-# 启用多核数据包转发负载均衡
-uci set network.globals.packet_steering='1'
+    # 启用多核数据包转发负载均衡
+    uci set network.globals.packet_steering='1'
 
-# 配置npc
-# uci set npc.@npc[0].server_addr='113.45.245.109'
-# uci set npc.@npc[0].server_port='8024'
-# uci set npc.@npc[0].protocol='tcp'
-# uci set npc.@npc[0].compress='1'
-# uci set npc.@npc[0].crypt='1'
-
+    # 换源
+    sed -i 's_https\?://downloads.openwrt.org_https://mirrors.tuna.tsinghua.edu.cn/openwrt_' /etc/opkg/distfeeds.conf
+fi
 
 for i in $(seq $SSID_START $SSID_END); do
     # 格式化数字
@@ -153,6 +150,3 @@ done
 
 uci commit firewall
 wifi up $RADIO
-
-# 换源
-sed -i 's_https\?://downloads.openwrt.org_https://mirrors.tuna.tsinghua.edu.cn/openwrt_' /etc/opkg/distfeeds.conf
