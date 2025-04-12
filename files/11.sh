@@ -133,19 +133,6 @@ for i in $(seq $SSID_START $SSID_END); do
     # 防火墙配置
     uci add_list firewall.@zone[0].network="$interface_num"
 
-    uci commit wireless
-    uci commit network
-    uci commit dhcp
-done
-
-uci commit firewall
-
-wifi up $RADIO
-
-for i in $(seq $SSID_START $SSID_END); do
-    # 格式化数字
-    interface_num=$(printf "%03d" $i)
-
     uci add passwall2 acl_rule
     uci set passwall2.@acl_rule[-1].enabled='1'
     uci set passwall2.@acl_rule[-1].remarks="$interface_num"
@@ -157,8 +144,15 @@ for i in $(seq $SSID_START $SSID_END); do
     uci set passwall2.@acl_rule[-1].remote_dns_detour='remote'
     uci set passwall2.@acl_rule[-1].remote_fakedns='0'
     uci set passwall2.@acl_rule[-1].remote_dns_query_strategy='UseIPv4'
+
+    uci commit wireless
+    uci commit network
+    uci commit dhcp
     uci commit "$APPNAME"
 done
+
+uci commit firewall
+wifi up $RADIO
 
 # 换源
 sed -i 's_https\?://downloads.openwrt.org_https://mirrors.tuna.tsinghua.edu.cn/openwrt_' /etc/opkg/distfeeds.conf
