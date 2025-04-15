@@ -85,8 +85,7 @@ for i in $(seq $SSID_START $SSID_END); do
     # 格式化数字
     interface_num=$(printf "%03d" $i)
     ap_num=$((i-1))
-    
-    ###以下为WiFi配置###
+
     # 创建wifi
     section="wifinet${i}"
     uci set wireless.$section=wifi-iface
@@ -114,13 +113,6 @@ for i in $(seq $SSID_START $SSID_END); do
     uci set network.@device[-1].name="$PHY-ap$ap_num"
     uci set network.@device[-1].ipv6='0'
     
-    # 禁用IPv6
-    # for option in ip6assign ip6addr ip6gw; do
-    #     uci -q delete network.$interface_num.$option
-    # done
-    # uci set network.$interface_num.dhcpv6="0"
-    # uci set network.$interface_num.ra="0"
-    
     # DHCP配置
     uci set dhcp.$interface_num=dhcp
     uci set dhcp.$interface_num.interface="$interface_num"
@@ -130,9 +122,10 @@ for i in $(seq $SSID_START $SSID_END); do
     uci set dhcp.$interface_num.dhcpv6="disabled"
     uci set dhcp.$interface_num.ra="disabled"
     
-    # 防火墙配置
+    # 划分至LAN口防火墙
     uci add_list firewall.@zone[0].network="$interface_num"
 
+    # passwall2访问控制配置
     uci add passwall2 acl_rule
     uci set passwall2.@acl_rule[-1].enabled='1'
     uci set passwall2.@acl_rule[-1].remarks="$interface_num"
