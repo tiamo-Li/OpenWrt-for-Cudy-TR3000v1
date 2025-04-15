@@ -76,6 +76,9 @@ if [ "$SSID_START" -eq 1 ]; then
 
     # 换源
     sed -i 's_https\?://downloads.openwrt.org_https://mirrors.tuna.tsinghua.edu.cn/openwrt_' /etc/opkg/distfeeds.conf
+    sed -e 's|https://downloads.immortalwrt.org|https://mirrors.ustc.edu.cn/immortalwrt|g' \
+    -e 's|https://mirrors.vsean.net/openwrt|https://mirrors.ustc.edu.cn/immortalwrt|g' \
+    -i.old /etc/opkg/distfeeds.conf
 fi
 
 for i in $(seq $SSID_START $SSID_END); do
