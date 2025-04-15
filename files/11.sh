@@ -14,29 +14,23 @@ if [ -n "$NEW_PASSWORD" ]; then
     echo -e "$NEW_PASSWORD\n$NEW_PASSWORD" | passwd root >/dev/null 2>&1
 fi
 
-# 常量定义
-RADIO="radio1"
-PHY="phy1"
-APPNAME="passwall2"
-
 # 检查环境
 [ "$(id -u)" -ne 0 ] && {
     echo "错误：必须使用root权限运行" >&2
     exit 1
 }
 
-! uci -q get wireless.$RADIO >/dev/null && {
-    echo "错误：无线设备$RADIO不存在" >&2
-    exit 1
-}
-
 if [ "$SSID_START" -eq 1 ]; then
     # 设置国家代码、删除默认wifi
-    uci set wireless.$RADIO.country='US'
+    uci set wireless.radio0.country='US'
+    uci set wireless.radio1.country='US'
     uci del wireless.default_radio0
     uci del wireless.default_radio1
 
     # 设置无线参数
+    uci set wireless.radio0.cell_density='2'
+    uci set wireless.radio0.channel='1'
+    uci set wireless.radio0.htmode='HE40'
     uci set wireless.radio1.cell_density='2'
     uci set wireless.radio1.channel='36'
     uci set wireless.radio1.htmode='HE40'
@@ -84,7 +78,15 @@ fi
 for i in $(seq $SSID_START $SSID_END); do
     # 格式化数字
     interface_num=$(printf "%03d" $i)
-    ap_num=$((i-1))
+    if [ "$i" -ge 17 ]; then
+        RADIO="radio0"
+        PHY="phy0"
+        ap_num=$((i-17))
+    else
+        RADIO="radio1"
+        PHY="phy1"
+        ap_num=$((i-1))
+    fi
 
     # 创建wifi
     section="wifinet${i}"
@@ -104,8 +106,6 @@ for i in $(seq $SSID_START $SSID_END); do
     # 创建网络接口
     uci set network.$interface_num=interface
     uci set network.$interface_num.proto="static"
-    
-    uci set network.$interface_num.device="$PHY-ap$ap_num"
     uci set network.$interface_num.ipaddr="192.168.$((BASE_IP+i-1)).1"
     uci set network.$interface_num.netmask="255.255.255.0" 
 
@@ -121,6 +121,8 @@ for i in $(seq $SSID_START $SSID_END); do
     uci set dhcp.$interface_num.leasetime="12h"
     uci set dhcp.$interface_num.dhcpv6="disabled"
     uci set dhcp.$interface_num.ra="disabled"
+    uci del dhcp.$interface_num.ra
+    uci del dhcp.$interface_num.dhcpv6
     
     # 划分至LAN口防火墙
     uci add_list firewall.@zone[0].network="$interface_num"
@@ -141,8 +143,10 @@ for i in $(seq $SSID_START $SSID_END); do
     uci commit wireless
     uci commit network
     uci commit dhcp
-    uci commit "$APPNAME"
+    uci commit passwall2
+    uci commit firewall
 done
 
-uci commit firewall
-wifi up $RADIO
+# 重启服务
+sleep 5
+reboot
