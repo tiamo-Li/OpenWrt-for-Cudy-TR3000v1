@@ -98,6 +98,7 @@ for i in $(seq $SSID_START $SSID_END); do
     uci set wireless.$section.encryption="psk2"
     uci set wireless.$section.key="$PASSWORD"
     uci set wireless.$section.macaddr='random'
+    uci set wireless.$section.ifname="$PHY-ap$ap_num"
     
     # 关键配置：客户端隔离和低ACK处理
     uci set wireless.$section.isolate='1'
@@ -145,6 +146,8 @@ for i in $(seq $SSID_START $SSID_END); do
     uci commit dhcp
     uci commit passwall2
     uci commit firewall
+    # wifi up $RADIO
+    # sleep 2
 done
 
 # 重启服务
