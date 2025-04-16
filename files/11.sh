@@ -108,7 +108,7 @@ for i in $(seq $SSID_START $SSID_END); do
     uci set network.$interface_num.proto="static"
     uci set network.$interface_num.ipaddr="192.168.$((BASE_IP+i-1)).1"
     uci set network.$interface_num.netmask="255.255.255.0" 
-
+    uci set network.$interface_num.device="$PHY-ap$ap_num"
     uci add network device
     uci set network.@device[-1].name="$PHY-ap$ap_num"
     uci set network.@device[-1].ipv6='0'
