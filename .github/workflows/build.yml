@@ -1,4 +1,4 @@
-name: OpenWrt Builder
+name: Builder
 
 on:
   repository_dispatch:
