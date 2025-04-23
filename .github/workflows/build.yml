@@ -101,7 +101,7 @@ jobs:
     - name: Install feeds
       run: |
         cd openwrt && ./scripts/feeds install -a
-        git clone https://github.com/KumaTea/minieap.git package/minieap
+        git clone https://github.com/BoringCat/minieap-openwrt.git package/minieap
         git clone https://github.com/BoringCat/luci-app-minieap.git package/luci-app-minieap
         
 
