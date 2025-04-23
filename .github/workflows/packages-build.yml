@@ -46,7 +46,7 @@ jobs:
         remove-haskell: 'true'
         remove-codeql: 'true'
         remove-docker-images: 'true'
-    
+
     - name: Checkout
       uses: actions/checkout@main
 
@@ -77,13 +77,12 @@ jobs:
     - name: Update feeds
       run: |
         cd openwrt && ./scripts/feeds update -a 
-      
+
     - name: Install feeds
       run: |
         cd openwrt && ./scripts/feeds install -a
         git clone https://github.com/BoringCat/minieap-openwrt.git package/minieap
         git clone https://github.com/BoringCat/luci-app-minieap.git package/luci-app-minieap
-        
 
     - name: Load custom configuration
       run: |
