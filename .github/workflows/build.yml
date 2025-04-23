@@ -119,8 +119,10 @@ jobs:
         popd
         cd openwrt
         echo -e "$(nproc) thread compile"
-        make package/minieap/compile V=s
-        make package/luci-app-minieap/compile V=s
+        make tools/install V=s -j$(grep processor /proc/cpuinfo | wc -l)
+        make toolchain/install V=s -j$(grep processor /proc/cpuinfo | wc -l)
+        make package/minieap/compile V=s -j$(grep processor /proc/cpuinfo | wc -l)
+        make package/luci-app-minieap/compile V=s -j$(grep processor /proc/cpuinfo | wc -l)
         echo "status=success" >> $GITHUB_OUTPUT
         grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
         [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
