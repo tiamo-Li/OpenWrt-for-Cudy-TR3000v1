@@ -1,4 +1,4 @@
-name: Packages Builder
+name: Packages24 Builder
 
 on:
   repository_dispatch:
