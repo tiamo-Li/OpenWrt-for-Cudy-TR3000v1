@@ -102,6 +102,8 @@ jobs:
       run: |
         cd openwrt && ./scripts/feeds install -a
         git clone https://github.com/KumaTea/minieap.git package/minieap
+        git clone https://github.com/BoringCat/luci-app-minieap.git package/luci-app-minieap
+        
 
     - name: Load custom configuration
       run: |
@@ -111,9 +113,14 @@ jobs:
     - name: Compile the firmware
       id: compile
       run: |
+        git clone https://github.com/openwrt-dev/po2lmo.git
+        pushd po2lmo
+        make && sudo make install
+        popd
         cd openwrt
         echo -e "$(nproc) thread compile"
         make package/minieap/compile V=s
+        make package/luci-app-minieap/compile V=s
         echo "status=success" >> $GITHUB_OUTPUT
         grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
         [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
