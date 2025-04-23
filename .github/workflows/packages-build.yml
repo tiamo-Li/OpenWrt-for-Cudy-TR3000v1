@@ -7,7 +7,7 @@ on:
 env:
   REPO_URL: https://github.com/openwrt/openwrt
   REPO_BRANCH: openwrt-24.10
-  CONFIG_FILE: .config
+  CONFIG_FILE: config/rax3000m.config
   TZ: Asia/Shanghai
 
 jobs:
