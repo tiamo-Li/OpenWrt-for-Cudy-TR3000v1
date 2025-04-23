@@ -101,6 +101,7 @@ jobs:
     - name: Install feeds
       run: |
         cd openwrt && ./scripts/feeds install -a
+        git clone https://github.com/KumaTea/minieap.git package/minieap
 
     - name: Load custom configuration
       run: |
