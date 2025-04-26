@@ -1,4 +1,4 @@
-name: OpenWrt Builder
+name: RAX3000Me Builder
 
 on:
   repository_dispatch:
