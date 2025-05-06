@@ -140,6 +140,10 @@ for i in $(seq $SSID_START $SSID_END); do
     uci set passwall2.@acl_rule[-1].remote_dns_detour='remote'
     uci set passwall2.@acl_rule[-1].remote_fakedns='0'
     uci set passwall2.@acl_rule[-1].remote_dns_query_strategy='UseIPv4'
+    uci set passwall2.@acl_rule[-1].tcp_no_redir_ports='disable'
+    uci set passwall2.@acl_rule[-1].udp_no_redir_ports='disable'
+    uci set passwall2.@acl_rule[-1].tcp_redir_ports='1:65535'
+    uci set passwall2.@acl_rule[-1].udp_redir_ports='1:65535'
 
     uci commit wireless
     uci commit network
