@@ -13,3 +13,10 @@ sed -i 's/ImmortalWrt/XR30i/g' package/base-files/files/bin/config_generate
 # add Argon theme
 # git clone https://github.com/jerrykuku/luci-theme-argon.git ./package/luci-theme-argon
 # git clone https://github.com/jerrykuku/luci-app-argon-config.git ./package/luci-app-argon-config
+
+# add shadowsocks-libev
+git clone https://github.com/shadowsocks/openwrt-shadowsocks.git ./package/shadowsocks-libev
+git clone https://github.com/shadowsocks/luci-app-shadowsocks.git ./package/luci-app-shadowsocks
+pushd package/luci-app-shadowsocks/tools/po2lmo
+make && sudo make install
+popd
