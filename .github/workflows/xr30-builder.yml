@@ -121,11 +121,6 @@ jobs:
     - name: Install feeds
       run: |
         cd openwrt && ./scripts/feeds install -a
-        git clone https://github.com/kenzok8/small-package.git
-        mv small-package/luci-app-npc package/
-        mv small-package/nps package/
-        rm -rf small-package/
-        git clone https://github.com/kuoruan/openwrt-upx.git ./package/openwrt-upx
 
     - name: Load custom configuration
       run: |
