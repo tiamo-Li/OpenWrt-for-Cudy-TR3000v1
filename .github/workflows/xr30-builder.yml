@@ -7,7 +7,7 @@ on:
 env:
   REPO_URL: https://github.com/immortalwrt/immortalwrt
   REPO_BRANCH: v24.10.1
-  FEEDS_CONF: feeds.conf.default
+  FEEDS_CONF: XR30/feeds.conf.default
   CONFIG_FILE: XR30/xr30.config
   DIY_P1_SH: XR30/diy-part1.sh
   DIY_P2_SH: XR30/diy-part2.sh
