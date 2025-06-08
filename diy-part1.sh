@@ -9,3 +9,6 @@ echo 'src-git passwall2 https://github.com/xiaorouji/openwrt-passwall2.git' >>fe
 
 # Add the feed source for OpenClash
 # echo "src-git OpenClash https://github.com/vernesong/OpenClash" >> ./feeds.conf.default
+
+# Add the feed source for helloworld
+echo 'src-git helloworld https://github.com/fw876/helloworld.git' >>feeds.conf.default
